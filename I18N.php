@@ -1,7 +1,7 @@
 <?php
 
 
-namespace chch;
+namespace chungachanga\i18n;
 
 class I18N
 {
