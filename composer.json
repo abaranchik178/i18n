@@ -7,5 +7,11 @@
             "email": "aatuline@gmail.com"
         }
     ],
-    "require": {}
+    "description": "for localization",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "chungachanga/i18n\\": "/"
+        }
+    }
 }
