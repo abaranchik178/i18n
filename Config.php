@@ -6,13 +6,21 @@ namespace chch;
 
 class Config
 {
+    private static $instance;
     private $translationSourceDir;
     private $lang;
 
-    public function __construct(string $translationSourceDir, string $lang)
+    public static function getInstance(): Config
     {
-        $this->setTranslationSourceDir($translationSourceDir);
-        $this->lang = $lang;
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+    private function __construct()
+    {
     }
 
     public function getTranslationSourceDir()
@@ -28,8 +36,14 @@ class Config
         $this->translationSourceDir = $translationSourceDir;
     }
 
+    public function setLang(string $lang)
+    {
+        $this->lang = $lang;
+    }
+
     public function getTranslationFileName()
     {
         return $this->translationSourceDir . '/' . $this->lang;
     }
+
 }
