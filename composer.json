@@ -1,0 +1,11 @@
+{
+    "name": "chungachanga/i18n",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Andrey B",
+            "email": "aatuline@gmail.com"
+        }
+    ],
+    "require": {}
+}
