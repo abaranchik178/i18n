@@ -5,13 +5,28 @@ namespace chungachanga\i18n;
 
 class I18N
 {
-    private $config;
-    private $translationFileContent;
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
+    private static $instance;
+    private static $config;
+    private static $translationFileContent;
 
-        $translationFileName = $this->config->getTranslationFileName();
+    public static function getInstance(): I18N
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+    private function __construct()
+    {
+    }
+
+    public static function setConfig(Config $config)
+    {
+        static::$config = $config;
+
+        $translationFileName = static::$config->getTranslationFileName();
         if ( ! file_exists($translationFileName) ) {
             throw new \RuntimeException("File $translationFileName not found");
         }
@@ -23,21 +38,20 @@ class I18N
         if ( ! is_array($translationFileContent) ) {
             throw new \RuntimeException("Translation file source $translationFileName must return array");
         }
-        $this->translationFileContent = $translationFileContent;
+        static::$translationFileContent = $translationFileContent;
     }
 
-    private function translateString(string $message)
+    private static function translateString(string $message)
     {
-        if ( isset($this->translationFileContent[$message]) ) {
-            return $this->translationFileContent[$message];
+        if ( isset(static::$translationFileContent[$message]) ) {
+            return static::$translationFileContent[$message];
         }
         //todo log
         return $message;
     }
 
-    public function t($message)
+    public static function t($message)
     {
-
-        return $this->translateString($message);
+        return static::translateString($message);
     }
 }
