@@ -43,7 +43,7 @@ class Config
 
     public function getTranslationFileName()
     {
-        return $this->translationSourceDir . '/' . $this->lang;
+        return $this->translationSourceDir . '/' . $this->lang . '.php';
     }
 
 }
