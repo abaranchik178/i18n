@@ -1,5 +1,5 @@
 {
-    "name": "simpleweb/i18n",
+    "name": "abaranchik178/i18n",
     "type": "library",
     "authors": [
         {
@@ -11,7 +11,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "simpleweb\\i18n\\": "/"
+            "abaranchik178\\i18n\\": "/"
         }
     }
 }

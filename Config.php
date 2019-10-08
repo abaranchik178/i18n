@@ -1,7 +1,7 @@
 <?php
 
 
-namespace simpleweb\i18n;
+namespace abaranchik178\i18n;
 
 
 class Config
