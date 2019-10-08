@@ -3,55 +3,45 @@
 
 namespace abaranchik178\i18n;
 
+use abaranchik178\i18n\exceptions\Exception;
+
 class I18N
 {
     private static $instance;
-    private static $config;
-    private static $translationFileContent;
+    private static $dictionary;
+    private static $initialized = false;
 
-    public static function getInstance(): I18N
+    public static function init(Dictionary $dictionary)
     {
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
-
-        return static::$instance;
-    }
-
-    private function __construct()
-    {
-    }
-
-    public static function setConfig(Config $config)
-    {
-        static::$config = $config;
-        static::$translationFileContent = [];
-        $translationFileName = static::$config->getTranslationFileName();
-        if ( ! file_exists($translationFileName) ) {
-//            throw new \RuntimeException("File $translationFileName not found");
-            return static::$translationFileContent;
-        }
-
-
-        static::$translationFileContent = $translationFileContent;
-    }
-
-    private static function loadDictionary()
-    {
-
-    }
-
-    private static function translateString(string $message)
-    {
-        if ( isset(static::$translationFileContent[$message]) ) {
-            return static::$translationFileContent[$message];
-        }
-        //todo log
-        return $message;
+        static::setDictionary($dictionary);
+        static::$initialized = true;
     }
 
     public static function t($message)
     {
-        return static::translateString($message);
+        try {
+            if (!static::$initialized) {
+                throw new Exception(__CLASS__ . 'has not been initialized');
+            }
+            if (is_string($message)) {
+                return static::translateString($message);
+            } else {
+                throw new Exception('So far, ' . __CLASS__ . ' can only translate strings.');
+            }
+        } catch (Exception $e) {
+            //fixme add logger
+            error_log($e->getMessage() . ' ' . $e->getTraceAsString());
+        }
     }
+
+    public static function setDictionary(Dictionary $dictionary)
+    {
+        static::$dictionary = $dictionary;
+    }
+
+    private static function translateString(string $text): string
+    {
+        return static::$dictionary->translateString($text);
+    }
+
 }
