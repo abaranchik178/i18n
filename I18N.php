@@ -24,13 +24,14 @@ class I18N
                 throw new Exception(__CLASS__ . 'has not been initialized');
             }
             if (is_string($message)) {
-                return static::translateString($message);
+                return static::translateText($message);
             } else {
                 throw new Exception('So far, ' . __CLASS__ . ' can only translate strings.');
             }
         } catch (Exception $e) {
             //fixme add logger
             error_log($e->getMessage() . ' ' . $e->getTraceAsString());
+            return $message;
         }
     }
 
@@ -39,9 +40,9 @@ class I18N
         static::$dictionary = $dictionary;
     }
 
-    private static function translateString(string $text): string
+    private static function translateText(string $text): string
     {
-        return static::$dictionary->translateString($text);
+        return static::$dictionary->translateText($text);
     }
 
 }

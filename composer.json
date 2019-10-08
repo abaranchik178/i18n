@@ -8,10 +8,12 @@
         }
     ],
     "description": "library for localization",
-    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "8.*.*"
+    },
     "autoload": {
         "psr-4": {
-            "abaranchik178\\i18n\\": "/"
+            "abaranchik178\\i18n\\": "\\"
         }
     }
 }

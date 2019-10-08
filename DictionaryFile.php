@@ -14,8 +14,13 @@ class DictionaryFile extends Dictionary
 
     public function __construct(string $dictionaryFileName)
     {
-        $this->setDictionaryFileName($dictionaryFileName);
-        $this->dictionaryCache = $this->loadDictionaryFromFile();
+        try {
+            $this->setDictionaryFileName($dictionaryFileName);
+            $this->dictionaryCache = $this->loadDictionaryFromFile($dictionaryFileName);
+        } catch (Exception $e) {
+            //fixme add logger
+            error_log($e->getMessage() . ' ' . $e->getTraceAsString());
+        }
     }
 
     public function translateText(string $text)
