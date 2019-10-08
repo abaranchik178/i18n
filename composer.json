@@ -1,5 +1,5 @@
 {
-    "name": "chungachanga/i18n",
+    "name": "simpleweb/i18n",
     "type": "library",
     "authors": [
         {
@@ -7,11 +7,11 @@
             "email": "aatuline@gmail.com"
         }
     ],
-    "description": "for localization",
+    "description": "library for localization",
     "require": {},
     "autoload": {
         "psr-4": {
-            "chungachanga\\i18n\\": "/"
+            "simpleweb\\i18n\\": "/"
         }
     }
 }

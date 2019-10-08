@@ -1,7 +1,7 @@
 <?php
 
 
-namespace chungachanga\i18n;
+namespace simpleweb\i18n;
 
 class I18N
 {
@@ -25,20 +25,20 @@ class I18N
     public static function setConfig(Config $config)
     {
         static::$config = $config;
-
+        static::$translationFileContent = [];
         $translationFileName = static::$config->getTranslationFileName();
         if ( ! file_exists($translationFileName) ) {
-            throw new \RuntimeException("File $translationFileName not found");
+//            throw new \RuntimeException("File $translationFileName not found");
+            return static::$translationFileContent;
         }
 
-        $translationFileContent = include "$translationFileName";
-        if ( false === $translationFileContent ) {
-            throw new \RuntimeException("Failed to include file $translationFileName");
-        }
-        if ( ! is_array($translationFileContent) ) {
-            throw new \RuntimeException("Translation file source $translationFileName must return array");
-        }
+
         static::$translationFileContent = $translationFileContent;
+    }
+
+    private static function loadDictionary()
+    {
+
     }
 
     private static function translateString(string $message)

@@ -1,26 +1,20 @@
 <?php
 
 
-namespace chungachanga\i18n;
+namespace simpleweb\i18n;
 
 
 class Config
 {
-    private static $instance;
     private $translationSourceDir;
     private $lang;
 
-    public static function getInstance(): Config
+    public function __construct(string $translationSourceDir, string $lang)
     {
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
+        $this->translationSourceDir = $translationSourceDir;
+        $this->lang = $lang;
 
-        return static::$instance;
-    }
-
-    private function __construct()
-    {
+        $this->validate();
     }
 
     public function getTranslationSourceDir()
@@ -28,12 +22,14 @@ class Config
         return $this->translationSourceDir;
     }
 
-    public function setTranslationSourceDir(string $translationSourceDir)
+    public function validate()
     {
-        if ( ! isset($translationSourceDir) ) {
-            throw new \InvalidArgumentException('Need set translation directory source');
+        if ( ! is_dir($this->translationSourceDir) ) {
+            throw new \RuntimeException("Not found directory: $this->translationSourceDir");
         }
-        $this->translationSourceDir = $translationSourceDir;
+//        if ( ! file_exists( $this->getTranslationFileName() ) ) {
+//            throw new \RuntimeException("Not found directory: $this->translationSourceDir");
+//        }
     }
 
     public function setLang(string $lang)
